@@ -8,8 +8,8 @@ services:
     image: markokajzer/discord-soundbot
     restart: on-failure:10
     environment:
-      - CLIENT_ID=YOUR_CLIENT_ID
-      - TOKEN=YOUR_TOKEN
+      - CLIENT_ID= {{ discord-bot-client-id }}
+      - TOKEN={{ discord-bot-token }}
     volumes:
       - /home/pi/discord-soundbot/sounds:/app/sounds
       - /home/pi/discord-soundbot/db.json:/app/db.json

@@ -2,6 +2,5 @@
 # Location where configuration files will be stored.
 config_dir: "~"
 
-
 discord-bot-client-id: "XXXXXXXXXXXXXXXXXXX"
 discord-bot-token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
