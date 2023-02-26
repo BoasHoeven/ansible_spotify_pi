@@ -1,0 +1,27 @@
+---
+- name: Create discord-bot folder on Pi.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/discord-bot"
+    state: directory
+    mode: 0755
+  become: false
+
+- name: Create sounds folder on Pi.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/discord-bot/sounds"
+    state: directory
+    mode: 0755
+  become: false
+
+- name: Copy portainer docker-compose template to Pi.
+  ansible.builtin.template:
+    src: templates/discord-soundbot-docker-compose.yml.j2
+    dest: "{{ config_dir }}/discord-soundbot/docker-compose.yml"
+    mode: 0640
+  become: false
+
+- name: Ensure discord bot is running.
+  community.docker.docker_compose:
+    project_src: "{{ config_dir }}/discord-soundbot/"
+    build: false
+  become: false

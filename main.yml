@@ -22,29 +22,10 @@
       when:
         - ansible_facts.os_family == "Archlinux"
 
-  handlers:
-    - name: Include handlers.
-      ansible.builtin.import_tasks: tasks/handlers.yml
-
   tasks:
     - name: Setup Docker.
       ansible.builtin.import_tasks: tasks/docker.yml
 
-    - name: Set up Zigbee2mqtt.
-      ansible.builtin.import_tasks: tasks/zigbee2mqtt.yml
-      when: zigbee2mqtt_enable
-
-    - name: Set up Mosquitto.
-      ansible.builtin.import_tasks: tasks/mosquitto.yml
-      when: mosquitto_enable
-
-    - name: Set up Pi-Hole.
-      ansible.builtin.import_tasks: tasks/pi-hole.yml
-      when: pihole_enable
-
     - name: Set up Portainer.
       ansible.builtin.import_tasks: tasks/portainer.yml
       when: portainer_enable
-
-    - name: Set up Home-Assistant.
-      ansible.builtin.import_tasks: tasks/home-assistant.yml
