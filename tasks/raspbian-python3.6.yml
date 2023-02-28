@@ -21,6 +21,7 @@
   get_url:
     url="https://www.python.org/ftp/python/{{version}}/Python-{{version}}.tar.xz"
     dest="/tmp/Python-{{version}}.tar.xz"
+  become: false
 
 - name: "Unarchive python{{version}}"
   unarchive:
@@ -28,12 +29,14 @@
     dest="/tmp/"
     copy=no
     creates="/tmp/Python-{{version}}"
+  become: false
 
 - name: "configure python{{version}} build"
   command: ./configure
   args:
     chdir: "/tmp/Python-{{version}}"
     creates: "/tmp/Python-{{version}}/Makefile"
+  become: false
 
 - name: "build python{{version}}"
   # not using make module to be able to use -j and creates option to fully skip step
@@ -41,6 +44,7 @@
   args:
     chdir: "/tmp/Python-{{version}}"
     creates: "/tmp/Python-{{version}}/python"
+  become: false
 
 - name: "install python{{version}}"
   make:
