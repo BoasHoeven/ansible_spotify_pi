@@ -45,7 +45,7 @@
   when: python_version_installed.rc != 0
   become: false
 
-- name: "configure python{{ python_version }} build"
+- name: "Configure python{{ python_version }} build"
   command: ./configure --enable-optimizations
   args:
     chdir: "/tmp/Python-{{ python_version }}"
@@ -53,7 +53,7 @@
   when: python_version_installed.rc != 0
   become: false
 
-- name: "build python{{ python_version }}"
+- name: "Build python{{ python_version }}"
   # not using make module to be able to use -j and creates option to fully skip step
   command: make -j{{ threads }}
   args:
@@ -62,7 +62,7 @@
   when: python_version_installed.rc != 0
   become: false
 
-- name: "install python{{ python_version }}"
+- name: "Install python{{ python_version }}"
   make:
     chdir: "/tmp/Python-{{ python_version }}"
     target: altinstall
