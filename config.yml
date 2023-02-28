@@ -2,9 +2,17 @@
 # Location where configuration files will be stored.
 config_dir: "~"
 
-discord_bot_client_id: "XXXXXXXXXXXXXXXXXXX"
-discord_bot_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+# 
+python: "{{ ansible_python_interpreter | default( ansible_python.executable | default('python') ) }}"
+pip: "{{ ( ansible_python.version_info[0] == 3 ) | ternary('pip3', 'pip') }}"
 
 # Python installer options
 python_version: 3.8.7
 threads: 4
+
+# MusicBot configuration
+discord_bot_client_id: "XXXXXXXXXXXXXXXXXXX"
+discord_bot_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+spotify_client_id: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+Spotify_ClientSecret: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
