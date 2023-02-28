@@ -28,5 +28,8 @@
     - name: Setup Python.
       ansible.builtin.import_tasks: tasks/raspbian-python-installer.yml
 
+    - name: Setup Pip.
+      ansible.builtin.import_tasks: tasks/pip-installer.yml
+
     - name: Setup MusicBot.
       ansible.builtin.import_tasks: tasks/music-bot-installer.yml

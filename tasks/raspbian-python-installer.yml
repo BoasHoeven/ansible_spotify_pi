@@ -1,8 +1,9 @@
 ---
-
-- name: get python version
-  shell: python {{ (python_version | float) | round(1) }} -V
-  register: python_version
+- name: Check if Python {{ python_version_major_minor }} is installed
+  command: python{{ python_version_major_minor }} --version
+  register: python_version_installed
+  ignore_errors: true
+  changed_when: false
 
 - name: Install dependencies
   become: true
@@ -28,7 +29,7 @@
   get_url:
     url="https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz"
     dest="/tmp/Python-{{ python_version }}.tar.xz"
-  when: ansible_python_version is version('{{ python_version }', '<')
+  when: python_version_installed.rc != 0
   become: false
 
 - name: "Unarchive python{{ python_version }}"
@@ -37,7 +38,7 @@
     dest="/tmp/"
     copy=no
     creates="/tmp/Python-{{ python_version }}"
-  when: ansible_python_version is version('{{ python_version }', '<')
+  when: python_version_installed.rc != 0
   become: false
 
 - name: "configure python{{ python_version }} build"
@@ -45,7 +46,7 @@
   args:
     chdir: "/tmp/Python-{{ python_version }}"
     creates: "/tmp/Python-{{ python_version }}/Makefile"
-  when: ansible_python_version is version('{{ python_version }', '<')
+  when: python_version_installed.rc != 0
   become: false
 
 - name: "build python{{ python_version }}"
@@ -54,12 +55,12 @@
   args:
     chdir: "/tmp/Python-{{ python_version }}"
     creates: "/tmp/Python-{{ python_version }}/python"
-  when: ansible_python_version is version('{{ python_version }', '<')
+  when: python_version_installed.rc != 0
   become: false
 
 - name: "install python{{ python_version }}"
   make:
     chdir: "/tmp/Python-{{ python_version }}"
     target: altinstall
-  when: ansible_python_version is version('{{ python_version }', '<')
+  when: python_version_installed.rc != 0
   become: true
