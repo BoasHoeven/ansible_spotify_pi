@@ -1,6 +1,6 @@
 ---
 - hosts: automatron
-  become: true
+  become: false
 
   pre_tasks:
     - name: Load configuration (with defaults from example file).
@@ -15,16 +15,15 @@
         cache_valid_time: 3600
       when:
         - ansible_facts.os_family == "Debian"
+      become: true
 
     - name: Ensure pacman cache is up to date
       community.general.pacman:
         update_cache: true
       when:
         - ansible_facts.os_family == "Archlinux"
-
+      become: true
+      
   tasks:
-    - name: Setup Docker.
-      ansible.builtin.import_tasks: tasks/docker.yml
-
     - name: Setup Python.
       ansible.builtin.import_tasks: tasks/raspbian-python3.6.yml
