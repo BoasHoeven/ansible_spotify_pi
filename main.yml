@@ -23,7 +23,7 @@
       when:
         - ansible_facts.os_family == "Archlinux"
       become: true
-      
+
   tasks:
     - name: Setup Python.
-      ansible.builtin.import_tasks: tasks/raspbian-python3.6.yml
+      ansible.builtin.import_tasks: tasks/raspbian-python-installer.yml
