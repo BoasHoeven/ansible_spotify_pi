@@ -1,7 +1,7 @@
 ---
 
 - name: get python version
-  shell: python -V
+  shell: python {{ (python_version | float) | round(1) }} -V
   register: python_version
 
 - name: Install dependencies
