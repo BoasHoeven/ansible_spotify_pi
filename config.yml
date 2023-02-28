@@ -6,5 +6,5 @@ discord_bot_client_id: "XXXXXXXXXXXXXXXXXXX"
 discord_bot_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 # Python installer options
-python_version: 3.6.5
+python_version: 3.8.7
 threads: 4

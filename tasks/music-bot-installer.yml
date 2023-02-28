@@ -1,0 +1,6 @@
+- name: Download Tesla Custom Integration
+  ansible.builtin.git:
+    repo: https://github.com/Just-Some-Bots/MusicBot.git
+    dest: "{{ config_dir }}/MusicBot"
+  when: download_tesla.changed
+  become: false
