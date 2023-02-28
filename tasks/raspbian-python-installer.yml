@@ -1,6 +1,6 @@
 - name: Check if Python {{ python_version }} is installed
-  command: python{{ python_version }} --version
-  register: python_version_output
+  command: python{{ python_version | round(1) }} --version
+  register: python_is_installed
   ignore_errors: true
   changed_when: false
   become: false
@@ -24,13 +24,13 @@
       - libssl-dev
       - openssl
     state: present
-  when: python_version_output.rc != 0
+  when: python_is_installed.rc != 0
 
 - name: "Download python{{ python_version }}"
   get_url:
     url="https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz"
     dest="/tmp/Python-{{ python_version }}.tar.xz"
-  when: python_version_output.rc != 0
+  when: python_is_installed.rc != 0
   become: false
 
 - name: "Unarchive python{{ python_version }}"
@@ -39,7 +39,7 @@
     dest="/tmp/"
     copy=no
     creates="/tmp/Python-{{ python_version }}"
-  when: python_version_output.rc != 0
+  when: python_is_installed.rc != 0
   become: false
 
 - name: "configure python{{ python_version }} build"
@@ -47,7 +47,7 @@
   args:
     chdir: "/tmp/Python-{{ python_version }}"
     creates: "/tmp/Python-{{ python_version }}/Makefile"
-  when: python_version_output.rc != 0
+  when: python_is_installed.rc != 0
   become: false
 
 - name: "build python{{ python_version }}"
@@ -56,12 +56,12 @@
   args:
     chdir: "/tmp/Python-{{ python_version }}"
     creates: "/tmp/Python-{{ python_version }}/python"
-  when: python_version_output.rc != 0
+  when: python_is_installed.rc != 0
   become: false
 
 - name: "install python{{ python_version }}"
   make:
     chdir: "/tmp/Python-{{ python_version }}"
     target: altinstall
-  when: python_version_output.rc != 0
+  when: python_is_installed.rc != 0
   become: true
