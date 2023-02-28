@@ -10,10 +10,11 @@
   copy:
     src: "{{ config_dir }}/MusicBot/config/example_options.ini"
     dest: "{{ config_dir }}/MusicBot/config/options.ini"
-
+  become: false
+  
 - name: Update INI file
   ini_file:
-    path: /path/to/ini/file.ini
+    path: "{{ config_dir }}/MusicBot/config/options.ini"
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
@@ -21,6 +22,7 @@
     - { section: "Credentials", option: "Token", value: "{{ discord_bot_token }}" }
     - { section: "Credentials", option: "Spotify_ClientID", value: "{{ spotify_client_id }}" }
     - { section: "Credentials", option: "Spotify_ClientSecret", value: "{{ spotify_client_secret }}" }
+  become: false
 
 - name: Extract major and minor version numbers from Python version string
   set_fact:
