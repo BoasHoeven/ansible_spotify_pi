@@ -21,3 +21,14 @@
     - { section: "Credentials", option: "Token", value: "{{ discord_bot_token }}" }
     - { section: "Credentials", option: "Spotify_ClientID", value: "{{ spotify_client_id }}" }
     - { section: "Credentials", option: "Spotify_ClientSecret", value: "{{ spotify_client_secret }}" }
+
+- name: Extract major and minor version numbers from Python version string
+  set_fact:
+    python_version_major_minor: "{{ python_version.split('.')[0:2] | join('.') }}"
+
+- name: Install dependencies for MusicBot project
+  become: true
+  shell: |
+    cd MusicBot
+    sudo -H python{{ python_version_major_minor }} -m pip install --upgrade pip
+    sudo -H python{{ python_version_major_minor }} -m pip install --upgrade -r requirements.txt

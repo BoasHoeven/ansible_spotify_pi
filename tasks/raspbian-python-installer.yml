@@ -1,4 +1,8 @@
 ---
+- name: Extract major and minor version numbers from Python version string
+  set_fact:
+    python_version_major_minor: "{{ python_version.split('.')[0:2] | join('.') }}"
+
 - name: Check if Python {{ python_version_major_minor }} is installed
   command: python{{ python_version_major_minor }} --version
   register: python_version_installed
