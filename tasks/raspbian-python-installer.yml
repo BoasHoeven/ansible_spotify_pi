@@ -46,7 +46,7 @@
   become: false
 
 - name: "configure python{{ python_version }} build"
-  command: ./configure
+  command: ./configure --enable-optimizations
   args:
     chdir: "/tmp/Python-{{ python_version }}"
     creates: "/tmp/Python-{{ python_version }}/Makefile"
