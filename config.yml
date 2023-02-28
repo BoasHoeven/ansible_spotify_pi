@@ -4,3 +4,7 @@ config_dir: "~"
 
 discord_bot_client_id: "XXXXXXXXXXXXXXXXXXX"
 discord_bot_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+# Python installer options
+python_version: 3.6.5
+threads: 4

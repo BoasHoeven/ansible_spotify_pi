@@ -1,0 +1,54 @@
+---
+- name: "python{{python_version}} runtime&build dependencies"
+  apt:
+    name:
+      - build-essential
+      - tk-dev
+      - libncurses5-dev
+      - libncursesw5-dev
+      - libreadline6-dev
+      - libdb5.3-dev
+      - libgdbm-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - libbz2-dev
+      - libexpat1-dev
+      - liblzma-dev
+      - zlib1g-dev
+    state: present
+  become: true
+
+- name: "Download python{{python_version}}"
+  get_url:
+    url="https://www.python.org/ftp/python/{{python_version}}/Python-{{python_version}}.tar.xz"
+    dest="/tmp/Python-{{python_version}}.tar.xz"
+  become: false
+
+- name: "Unarchive python{{python_version}}"
+  unarchive:
+    src="/tmp/Python-{{python_version}}.tar.xz"
+    dest="/tmp/"
+    copy=no
+    creates="/tmp/Python-{{python_version}}"
+  become: false
+
+- name: "configure python{{python_version}} build"
+  command: ./configure
+  args:
+    chdir: "/tmp/Python-{{python_version}}"
+    creates: "/tmp/Python-{{python_version}}/Makefile"
+  become: false
+
+- name: "build python{{python_version}}"
+  # not using make module to be able to use -j and creates option to fully skip step
+  command: make -j{{threads}}
+  args:
+    chdir: "/tmp/Python-{{python_version}}"
+    creates: "/tmp/Python-{{python_version}}/python"
+  become: false
+
+- name: "install python{{python_version}}"
+  make:
+    chdir: "/tmp/Python-{{python_version}}"
+    target: altinstall
+  become: true
