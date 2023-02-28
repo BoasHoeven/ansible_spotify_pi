@@ -26,5 +26,5 @@
     - name: Setup Docker.
       ansible.builtin.import_tasks: tasks/docker.yml
 
-    - name: Set up Discord Soundbot.
-      ansible.builtin.import_tasks: tasks/discord-soundbot.yml
+    - name: Setup Python.
+      ansible.builtin.import_tasks: tasks/raspbian-python3.6.yml
