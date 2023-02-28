@@ -12,7 +12,7 @@
     dest: "{{ config_dir }}/MusicBot/config/options.ini"
   become: false
   
-- name: Update INI file
+- name: Update MusicBot config
   ini_file:
     path: "{{ config_dir }}/MusicBot/config/options.ini"
     section: "{{ item.section }}"
