@@ -1,4 +1,10 @@
----
+- name: Check if Python {{ python_version }} is installed
+  command: python{{ python_version }} --version
+  register: python_version_output
+  ignore_errors: true
+  changed_when: false
+  become: false
+
 - name: Install dependencies
   become: true
   apt:
@@ -18,39 +24,44 @@
       - libssl-dev
       - openssl
     state: present
+  when: python_version_output.rc != 0
 
-
-- name: "Download python{{python_version}}"
+- name: "Download python{{ python_version }}"
   get_url:
-    url="https://www.python.org/ftp/python/{{python_version}}/Python-{{python_version}}.tar.xz"
-    dest="/tmp/Python-{{python_version}}.tar.xz"
+    url="https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz"
+    dest="/tmp/Python-{{ python_version }}.tar.xz"
+  when: python_version_output.rc != 0
   become: false
 
-- name: "Unarchive python{{python_version}}"
+- name: "Unarchive python{{ python_version }}"
   unarchive:
-    src="/tmp/Python-{{python_version}}.tar.xz"
+    src="/tmp/Python-{{ python_version }}.tar.xz"
     dest="/tmp/"
     copy=no
-    creates="/tmp/Python-{{python_version}}"
+    creates="/tmp/Python-{{ python_version }}"
+  when: python_version_output.rc != 0
   become: false
 
-- name: "configure python{{python_version}} build"
+- name: "configure python{{ python_version }} build"
   command: ./configure
   args:
-    chdir: "/tmp/Python-{{python_version}}"
-    creates: "/tmp/Python-{{python_version}}/Makefile"
+    chdir: "/tmp/Python-{{ python_version }}"
+    creates: "/tmp/Python-{{ python_version }}/Makefile"
+  when: python_version_output.rc != 0
   become: false
 
-- name: "build python{{python_version}}"
+- name: "build python{{ python_version }}"
   # not using make module to be able to use -j and creates option to fully skip step
-  command: make -j{{threads}}
+  command: make -j{{ threads }}
   args:
-    chdir: "/tmp/Python-{{python_version}}"
-    creates: "/tmp/Python-{{python_version}}/python"
+    chdir: "/tmp/Python-{{ python_version }}"
+    creates: "/tmp/Python-{{ python_version }}/python"
+  when: python_version_output.rc != 0
   become: false
 
-- name: "install python{{python_version}}"
+- name: "install python{{ python_version }}"
   make:
-    chdir: "/tmp/Python-{{python_version}}"
+    chdir: "/tmp/Python-{{ python_version }}"
     target: altinstall
+  when: python_version_output.rc != 0
   become: true
