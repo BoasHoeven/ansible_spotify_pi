@@ -1,6 +1,6 @@
 ---
-- hosts: automated_pi
-  become: true
+- hosts: automatron
+  become: false
 
   pre_tasks:
     - name: Load configuration (with defaults from example file).
