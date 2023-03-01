@@ -5,7 +5,8 @@ sudo reboot
 git clone https://github.com/BoasHoeven/ansible_spotify_pi.git
 ```
 
-Update the config file with credentials. Then run the following cmds:
+Update the config file with credentials. <br>
+Then run the following cmds:
 
 ```
 ansible-galaxy collection install -r requirements.yml
