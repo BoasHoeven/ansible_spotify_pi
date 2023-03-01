@@ -1,6 +1,6 @@
 ---
 - hosts: automatron
-  become: false
+  become: true
 
   pre_tasks:
     - name: Load configuration (with defaults from example file).
@@ -15,21 +15,16 @@
         cache_valid_time: 3600
       when:
         - ansible_facts.os_family == "Debian"
-      become: true
 
     - name: Ensure pacman cache is up to date
       community.general.pacman:
         update_cache: true
       when:
         - ansible_facts.os_family == "Archlinux"
-      become: true
 
   tasks:
-    - name: Setup Python.
-      ansible.builtin.import_tasks: tasks/raspbian-python-installer.yml
+    - name: Setup Docker.
+      ansible.builtin.import_tasks: tasks/docker.yml
 
-    - name: Setup Pip.
-      ansible.builtin.import_tasks: tasks/pip-installer.yml
-
-    - name: Setup MusicBot.
-      ansible.builtin.import_tasks: tasks/music-bot-installer.yml
+    - name: Set up Spotify bot.
+      ansible.builtin.import_tasks: tasks/spotify.yml

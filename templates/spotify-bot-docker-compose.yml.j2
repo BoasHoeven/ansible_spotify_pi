@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  aoede:
+    image: codetheweb/aoede:latest
+    restart: always
+    volumes:
+      - ./aoede:/data
+    environment:
+      - DISCORD_TOKEN={{ discord_bot_token }}
+      - SPOTIFY_USERNAME={{ spotify_username }}
+      - SPOTIFY_PASSWORD={{ spotify_password }}
+      - DISCORD_USER_ID={{ discord_user_id }}

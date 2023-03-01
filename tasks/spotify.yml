@@ -1,0 +1,19 @@
+- name: Create spotify bot folder on Pi.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/spotify-bot"
+    state: directory
+    mode: 0755
+  become: false
+
+- name: Copy spotify bot docker-compose template to Pi.
+  ansible.builtin.template:
+    src: templates/spotify-bot-docker-compose.yml.j2
+    dest: "{{ config_dir }}/spotify-bot/docker-compose.yml"
+    mode: '0640'
+  become: false
+
+- name: Ensure spotify bot is running.
+  community.docker.docker_compose:
+    project_src: "{{ config_dir }}/spotify-bot/"
+    build: false
+  become: false
