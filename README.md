@@ -9,9 +9,6 @@ Update the config file with credentials. Then run the following cmds:
 
 ```
 ansible-galaxy collection install -r requirements.yml
-```
-
-```
 ansible-playbook main.yml
 ```
 
