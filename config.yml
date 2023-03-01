@@ -2,7 +2,7 @@
 # Location where configuration files will be stored.
 config_dir: "~"
 
-# MusicBot configuration
+# Spotify bot configuration
 discord_bot_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 discord_user_id: "XXXXXXXXXXXXXXXXXX"
 
