@@ -2,9 +2,12 @@
 # Location where configuration files will be stored.
 config_dir: "~"
 
-# MusicBot configuration
+# Discord bot token (Find it here: https://discord.com/developers/applications)
 discord_bot_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+# Your discord user id (Find it here: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
 discord_user_id: "XXXXXXXXXXXXXXXXXX"
 
+# Spotify credentials
 spotify_username: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 spotify_password: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
